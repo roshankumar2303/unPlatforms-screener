@@ -1,0 +1,19 @@
+[
+    {
+        "postID": 1,
+        "userPic": "profiles/profile-1.png",
+        "userName": "Horng H Chen",
+        "userDetails": [
+            "Alum",
+            "Finance, MBA",
+            "2016",
+            "Business Manager at Capgemini"
+        ],
+        "postDetails": [
+            "1d",
+            "San Fransisco"
+        ],
+        "postTitle": "The concept of Research: A cross-cultural study",
+        "postContent": "Oxford Nanopore has pulled in $100m from investors in the Asia-Pacific region, as it completes a funding round that values the fast-growing UK biotechnology company at $1.5bn."
+    }
+]

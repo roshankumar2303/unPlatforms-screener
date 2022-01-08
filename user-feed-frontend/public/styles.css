@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+:root {
+    --theme-col: #5655C6;
+    --bg-col: #e8e8e8;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-col);
+}
+
+.lead {
+    font-weight: 800;
+}
+
+.badge {
+    box-shadow: 2px 2px 4px darkgrey, -2px -2px 4px white;
+    font-weight: 600;
+}
+
+.bg-primary {
+    background-color: var(--theme-col) !important;
+}
+
+.bg-light {
+    background-color: var(--bg-col) !important;
+}
+
+.card {
+    background-color: var(--bg-col);
+    border: none;
+    border-radius: 16px;
+    box-shadow: 8px 8px 16px darkgrey, -8px -8px 16px white;
+    min-width: 360px;
+}
+
+.profile-img {
+    object-fit: cover;
+    box-shadow: 8px 8px 8px darkgrey, -8px -8px 8px white;
+    border: 2px solid var(--bg-col);
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+}
+
+.post-status-btn {
+    color: var(--theme-col);
+    background-color: var(--bg-col);
+    box-shadow: 4px 4px 4px darkgrey, -4px -4px 4px white;
+    border: 2px solid var(--bg-col);
+    border-radius: 16px;
+    padding: 0.5rem 1rem;
+}
+
+.post-status-btn:hover {
+    box-shadow: 8px 8px 8px darkgrey, -8px -8px 8px white;
+    transition-duration: 100ms;
+    border: 2px solid var(--theme-col);
+}
+
+.post-status-btn:active {
+    box-shadow: inset 4px 4px 4px darkgray, inset -4px -4px 4px white;
+}
