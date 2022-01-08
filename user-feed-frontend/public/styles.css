@@ -51,6 +51,7 @@ body {
     border: 2px solid var(--bg-col);
     border-radius: 16px;
     padding: 0.5rem 1rem;
+    margin-right: 1rem;
 }
 
 .post-status-btn:hover {

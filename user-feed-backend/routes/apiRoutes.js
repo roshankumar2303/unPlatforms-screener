@@ -34,7 +34,14 @@ router.put("/updateLikes", (req, res) => {
     db.stat.update(
         { likes: req.body.likes },
         { where: { postID: req.body.postID } }
-        ).then(() => res.send({ message: "Likes updated successfully" }));
+    ).then(() => res.send({ message: "Likes updated successfully" }));
+})
+
+router.put("/updateShares", (req, res) => {
+    db.stat.update(
+        { shares: req.body.shares },
+        { where: {postID: req.body.postID } }
+    ).then(() => res.send({ message: "Shares updated succcessfully" }));
 })
 
 module.exports = router;

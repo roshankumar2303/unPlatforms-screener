@@ -1,6 +1,6 @@
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
-import { FETCH_STATS, INCR_LIKES } from './actions'
+import { FETCH_STATS, INCR_LIKES, INCR_SHARES } from './actions'
 
 // Reducer function for the store
 const reducer = (state = {}, action) => {
@@ -10,6 +10,12 @@ const reducer = (state = {}, action) => {
                 ...state,
                 likes: state.likes + 1
             };
+
+        case INCR_SHARES:
+            return {
+                ...state,
+                shares: state.shares + 1
+            }
         
         case FETCH_STATS:
             return action.payload;

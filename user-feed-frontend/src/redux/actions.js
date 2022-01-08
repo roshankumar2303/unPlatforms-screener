@@ -3,9 +3,10 @@ import axios from "axios";
 
 export const FETCH_STATS = 'FETCH_STATS';
 export const INCR_LIKES = 'INCR_LIKES';
+export const INCR_SHARES = 'INCR_SHARES';
 
 const fetchStatsActionCreator = (stats) => ({
-    type: 'FETCH_STATS',
+    type: FETCH_STATS,
     payload: stats
 })
 export const fetchStatsActionThunk = () => {
@@ -32,14 +33,17 @@ export const fetchStatsActionThunk = () => {
 }
 
 const incrementLikesActionCreator = () => ({
-    type: 'INCR_LIKES' 
+    type: INCR_LIKES 
 })
 export const incrementLikesActionThunk = () => {
     return async (dispatch, getState) => {
         try {
-            let res = await axios.put("http://localhost:4444/api/updateLikes", {postID: 1, likes: getState().likes + 1});
+            let res = await axios.put(
+                "http://localhost:4444/api/updateLikes", 
+                { postID: 1, likes: getState().likes + 1 }
+            );
             dispatch(incrementLikesActionCreator());
-            console.log(res.data)
+            console.log(res.data);
         }
         catch (e) {
             console.log(e);
@@ -47,3 +51,21 @@ export const incrementLikesActionThunk = () => {
     }
 }
 
+const incrementSharesActionCreator = () => ({
+    type: INCR_SHARES
+})
+export const incrementSharesActionThunk = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await axios.put(
+                "http://localhost:4444/api/updateShares",
+                { postID: 1, shares: getState().shares + 1 }
+            );
+            dispatch(incrementSharesActionCreator());
+            console.log(res.data);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+}
