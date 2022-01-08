@@ -1,6 +1,6 @@
 [
     {
-        "postID": 1,
+        "postID": "1",
         "userPic": "profiles/profile-1.png",
         "userName": "Horng H Chen",
         "userDetails": [

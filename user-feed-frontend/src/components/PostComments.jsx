@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { addCommentActionThunk } from "../redux/actions"
 
-const PostComments = () => {
+const PostComments = (props) => {
     const allComments = useSelector(state => state.comments)
     const [newComment, setComment] = useState("");
     const [disabled, disableComment] = useState(true);
@@ -14,7 +14,7 @@ const PostComments = () => {
     const submitComment = (event) => {
         event.preventDefault();
         setComment(newComment.trim());
-        dispatch(addCommentActionThunk(newComment));
+        dispatch(addCommentActionThunk(newComment, props.postID));
         setComment("");
         disableComment(true);
     }
@@ -34,7 +34,9 @@ const PostComments = () => {
                     <textarea onChange={handleCommentChange} value={newComment} className="form-control" placeholder="Type something..." id="commentInput" />
                     <label htmlFor="commentInput">New Comment</label>
                 </div>
-                <button disabled={disabled} className="post-btn" type="submit">Post Comment</button>
+                <button disabled={disabled} className="post-btn" type="submit">
+                    <i className="fas fa-paper-plane"></i> Post Comment
+                </button>
                 {allComments.map((_, index, arr) => {
                     // For displaying comments in reverse...
                     let commentObj = arr[arr.length - 1 - index]

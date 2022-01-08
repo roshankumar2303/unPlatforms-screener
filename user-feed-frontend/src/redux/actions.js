@@ -1,4 +1,4 @@
-// All action creators and thunk action creators are written in this file, each of which returns a specific action object
+// All action creators and thunk action creators are written in this file
 import axios from "axios";
 
 export const FETCH_STATS = 'FETCH_STATS';
@@ -10,12 +10,13 @@ const fetchStatsActionCreator = (stats) => ({
     type: FETCH_STATS,
     payload: stats
 })
-export const fetchStatsActionThunk = () => {
+export const fetchStatsActionThunk = (postID) => {
     return async (dispatch) => {
         let res;
         try {
-            res = await axios.get("http://localhost:4444/api/getStats/1");
+            res = await axios.get("http://localhost:4444/api/getStats/" + postID);
             let [stats] = res.data;     // Since res.data is an array of single object
+            console.log("stats fetched (fetchStatsActionThunk): ", stats)
             if(stats !== undefined) {
                 // i.e., entry exists in the database...
                 dispatch(fetchStatsActionCreator(stats));
@@ -24,9 +25,10 @@ export const fetchStatsActionThunk = () => {
                 // No entry exists, post to create a new entry in the database
                 res = await axios.post(
                     "http://localhost:4444/api/newStats", 
-                    { postID: "1" }
+                    { postID: postID }
                 );
                 let newStats = res.data;
+                console.log("new stats fetched (fetchStatsActionThunk): ", newStats)
                 dispatch(fetchStatsActionCreator(newStats));
             }
         }
@@ -39,15 +41,15 @@ export const fetchStatsActionThunk = () => {
 const incrementLikesActionCreator = () => ({
     type: INCR_LIKES 
 })
-export const incrementLikesActionThunk = () => {
+export const incrementLikesActionThunk = (postID) => {
     return async (dispatch, getState) => {
         try {
             let res = await axios.put(
-                "http://localhost:4444/api/updateLikes/1", 
+                "http://localhost:4444/api/updateLikes/" + postID, 
                 { likes: getState().likes + 1 }
             );
             dispatch(incrementLikesActionCreator());
-            console.log(res.data);
+            console.log("(incrementLikesActionThunk): ", res.data);
         }
         catch (e) {
             console.log(e);
@@ -58,15 +60,15 @@ export const incrementLikesActionThunk = () => {
 const incrementSharesActionCreator = () => ({
     type: INCR_SHARES
 })
-export const incrementSharesActionThunk = () => {
+export const incrementSharesActionThunk = (postID) => {
     return async (dispatch, getState) => {
         try {
             let res = await axios.put(
-                "http://localhost:4444/api/updateShares/1",
+                "http://localhost:4444/api/updateShares/" + postID,
                 { shares: getState().shares + 1 }
             );
             dispatch(incrementSharesActionCreator());
-            console.log(res.data);
+            console.log("(incrementSharesActionThunk): ", res.data);
         }
         catch (e) {
             console.log(e);
@@ -78,7 +80,7 @@ const addCommentActionCreator = (allComments) => ({
     type: ADD_COMMENT,
     payload: allComments
 })
-export const addCommentActionThunk = (newComment) => {
+export const addCommentActionThunk = (newComment, postID) => {
     return async (dispatch, getState) => {
         try {
             let allComments = getState().comments;
@@ -90,11 +92,11 @@ export const addCommentActionThunk = (newComment) => {
                 }
             )
             let res = await axios.put(
-                "http://localhost:4444/api/updateComments/1",
+                "http://localhost:4444/api/updateComments/" + postID,
                 allComments
             )
             dispatch(addCommentActionCreator(allComments));
-            console.log(res.data);
+            console.log("(addCommentActionThunk): ", res.data);
         }
         catch (e) {
             console.log(e);

@@ -5,7 +5,7 @@ const db = require("../models");
 const router = express.Router();
 
 // Assumption: GET request for stats only takes place on page refresh
-// For every GET request on stats, update views in DB first, then respond with entry
+// For every GET request on stats, update views in the DB first, then respond with entry
 router.get("/getStats/:postID", (req, res) => {
     // db.stat.findAll({
     //     where: {

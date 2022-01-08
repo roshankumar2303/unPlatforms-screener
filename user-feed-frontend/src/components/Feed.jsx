@@ -5,9 +5,10 @@ import posts from "../posts.json";
 // console.log(posts)
 
 const Feed = () => {
-    return posts.map((post) => (
+    return posts.map((post, index) => (
         <Post
-            key={post.postID}
+            key={index}
+            postID={post.postID}
             userPic={post.userPic}
             userName={post.userName}
             userDetails={post.userDetails}
