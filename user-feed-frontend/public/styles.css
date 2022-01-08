@@ -3,6 +3,9 @@
 :root {
     --theme-col: #5655C6;
     --bg-col: #e8e8e8;
+    --light-side: white;
+    --dark-side: darkgrey;
+    --faded: grey;
 }
 
 body {
@@ -15,7 +18,7 @@ body {
 }
 
 .badge {
-    box-shadow: 2px 2px 4px darkgrey, -2px -2px 4px white;
+    box-shadow: 2px 2px 4px var(--dark-side), -2px -2px 4px var(--light-side);
     font-weight: 600;
 }
 
@@ -27,39 +30,75 @@ body {
     background-color: var(--bg-col) !important;
 }
 
+.ico {
+    height: 36px;
+}
+
 .card {
     background-color: var(--bg-col);
     border: none;
     border-radius: 16px;
-    box-shadow: 8px 8px 16px darkgrey, -8px -8px 16px white;
+    box-shadow: 8px 8px 16px var(--dark-side), -8px -8px 16px var(--light-side);
     min-width: 360px;
 }
 
 .profile-img {
     object-fit: cover;
-    box-shadow: 8px 8px 8px darkgrey, -8px -8px 8px white;
+    box-shadow: 8px 8px 8px var(--dark-side), -8px -8px 8px var(--light-side);
     border: 2px solid var(--bg-col);
     border-radius: 50%;
     height: 80px;
     width: 80px;
 }
 
-.post-status-btn {
+.post-btn {
     color: var(--theme-col);
     background-color: var(--bg-col);
-    box-shadow: 4px 4px 4px darkgrey, -4px -4px 4px white;
+    box-shadow: 4px 4px 4px var(--dark-side), -4px -4px 4px var(--light-side);
     border: 2px solid var(--bg-col);
     border-radius: 16px;
-    padding: 0.5rem 1rem;
-    margin-right: 1rem;
+    padding: 0.25rem 1rem;
+    margin: 0 1rem 1rem 0;
+
 }
 
-.post-status-btn:hover {
-    box-shadow: 8px 8px 8px darkgrey, -8px -8px 8px white;
+.post-btn:hover {
+    box-shadow: 8px 8px 8px var(--dark-side), -8px -8px 8px var(--light-side);
     transition-duration: 100ms;
     border: 2px solid var(--theme-col);
 }
 
-.post-status-btn:active {
-    box-shadow: inset 4px 4px 4px darkgray, inset -4px -4px 4px white;
+.post-btn:active {
+    box-shadow: inset 4px 4px 4px var(--dark-side), inset -4px -4px 4px var(--light-side);
+}
+
+.post-btn:disabled {
+    box-shadow: none;
+    border: 2px dashed var(--faded);
+    color: var(--faded);
+}
+
+.form-control {
+    background-color: var(--bg-col);
+    border-radius: 8px;
+    border: 1px solid var(--faded);
+    margin-bottom: 1rem;
+}
+
+.form-control:focus {
+    background-color: var(--bg-col);
+    box-shadow: none;
+    border: 2px solid var(--theme-col);
+}
+
+.comment-card {
+    box-shadow: 4px 4px 4px var(--dark-side), -4px -4px 4px var(--light-side);
+    border-radius: 16px;
+    padding: 1rem;
+}
+
+.comment-timestamp {
+    font-size: small;
+    color: var(--faded);
+    margin-bottom: 0.25rem;
 }

@@ -4,6 +4,7 @@ import axios from "axios";
 export const FETCH_STATS = 'FETCH_STATS';
 export const INCR_LIKES = 'INCR_LIKES';
 export const INCR_SHARES = 'INCR_SHARES';
+export const ADD_COMMENT = 'ADD_COMMENT';
 
 const fetchStatsActionCreator = (stats) => ({
     type: FETCH_STATS,
@@ -21,7 +22,10 @@ export const fetchStatsActionThunk = () => {
             }
             else {
                 // No entry exists, post to create a new entry in the database
-                res = await axios.post("http://localhost:4444/api/newStats", {postID: "1"});
+                res = await axios.post(
+                    "http://localhost:4444/api/newStats", 
+                    { postID: "1" }
+                );
                 let newStats = res.data;
                 dispatch(fetchStatsActionCreator(newStats));
             }
@@ -39,8 +43,8 @@ export const incrementLikesActionThunk = () => {
     return async (dispatch, getState) => {
         try {
             let res = await axios.put(
-                "http://localhost:4444/api/updateLikes", 
-                { postID: 1, likes: getState().likes + 1 }
+                "http://localhost:4444/api/updateLikes/1", 
+                { likes: getState().likes + 1 }
             );
             dispatch(incrementLikesActionCreator());
             console.log(res.data);
@@ -58,10 +62,38 @@ export const incrementSharesActionThunk = () => {
     return async (dispatch, getState) => {
         try {
             let res = await axios.put(
-                "http://localhost:4444/api/updateShares",
-                { postID: 1, shares: getState().shares + 1 }
+                "http://localhost:4444/api/updateShares/1",
+                { shares: getState().shares + 1 }
             );
             dispatch(incrementSharesActionCreator());
+            console.log(res.data);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+}
+
+const addCommentActionCreator = (allComments) => ({
+    type: ADD_COMMENT,
+    payload: allComments
+})
+export const addCommentActionThunk = (newComment) => {
+    return async (dispatch, getState) => {
+        try {
+            let allComments = getState().comments;
+            // console.log(`New comment in thunk: ${newComment}`)
+            allComments.push(
+                {
+                    time: new Date().toLocaleString('en-IN'),
+                    comment: newComment
+                }
+            )
+            let res = await axios.put(
+                "http://localhost:4444/api/updateComments/1",
+                allComments
+            )
+            dispatch(addCommentActionCreator(allComments));
             console.log(res.data);
         }
         catch (e) {

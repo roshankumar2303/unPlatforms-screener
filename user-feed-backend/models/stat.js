@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         views: {
             type: DataTypes.INTEGER,
             allowNull: false
+        },
+        comments: {
+            type: DataTypes.JSON,
+            allowNull: false
         }
     });
     return stat;

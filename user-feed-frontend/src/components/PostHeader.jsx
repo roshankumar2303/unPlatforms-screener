@@ -9,10 +9,10 @@ const PostHeader = (props) => {
             <div className="col-sm-9 col-md-10">
                 <h5 style={{fontWeight:800}}>{props.userName}</h5>
                  <div>
-                     {props.userDetails.map(detail => <span className="badge rounded-pill bg-primary me-2 my-1">{detail}</span>)}
+                     {props.userDetails.map((detail, index) => <span key={index} className="badge rounded-pill bg-primary me-2 my-1">{detail}</span>)}
                  </div>
                  <div>
-                     {props.postDetails.map(detail => <span className="badge rounded-pill bg-light text-dark me-2 my-1">{detail}</span>)}
+                     {props.postDetails.map((detail, index) => <span key={index} className="badge rounded-pill bg-light text-dark me-2 my-1">{detail}</span>)}
                  </div>
             </div>
         </div>

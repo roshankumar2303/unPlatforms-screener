@@ -24,24 +24,40 @@ router.post("/newStats", (req, res) => {
         postID: req.body.postID,
         likes: 0,
         shares: 0,
-        views: 0
+        views: 0,
+        comments: []
     }).then((newStats) => {
         res.send(newStats)
     });
 });
 
-router.put("/updateLikes", (req, res) => {
+router.put("/updateLikes/:postID", (req, res) => {
     db.stat.update(
         { likes: req.body.likes },
-        { where: { postID: req.body.postID } }
+        { where: { postID: req.params.postID } }
     ).then(() => res.send({ message: "Likes updated successfully" }));
 })
 
-router.put("/updateShares", (req, res) => {
+router.put("/updateShares/:postID", (req, res) => {
     db.stat.update(
         { shares: req.body.shares },
-        { where: {postID: req.body.postID } }
+        { where: {postID: req.params.postID } }
     ).then(() => res.send({ message: "Shares updated succcessfully" }));
+})
+
+router.get("/getComments/:postID", (req, res) => {
+    db.stat.findAll({
+        where: {
+            postID: req.params.postID
+        }
+    }).then((stats) => res.send(stats[0].comments));
+});
+
+router.put("/updateComments/:postID", (req, res) => {
+    db.stat.update(
+        { comments: req.body },
+        { where: { postID: req.params.postID } }
+    ).then(() => res.send({ message: "Comments updated successfully" }))
 })
 
 module.exports = router;
