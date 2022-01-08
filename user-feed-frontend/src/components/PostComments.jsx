@@ -6,7 +6,13 @@ import { useSelector } from "react-redux";
 import { addCommentActionThunk } from "../redux/actions"
 
 const PostComments = (props) => {
-    const allComments = useSelector(state => state.comments)
+    const allComments = useSelector((state) => {
+        if(state.posts.find((post) => post.postID === props.postID) !== undefined) {
+            return state.posts.find((post) => post.postID === props.postID).comments
+        }
+        return []
+    })
+
     const [newComment, setComment] = useState("");
     const [disabled, disableComment] = useState(true);
     

@@ -4,34 +4,47 @@ import { FETCH_STATS, INCR_LIKES, INCR_SHARES, ADD_COMMENT } from './actions'
 
 // Initial state is just to prevent errors due to undefined state parameters
 const initialState = {
-    likes: 0,
-    shares: 0,
-    views: 0,
-    comments: []
+    posts: []
 }
 // Reducer function for the store
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case FETCH_STATS:
-            return action.payload;
-
-        case INCR_LIKES:
+        case FETCH_STATS: {
             return {
                 ...state,
-                likes: state.likes + 1
+                posts: [...state.posts, action.payload]
+            }
+        }
+
+        case INCR_LIKES: {
+            const index = state.posts.findIndex((post) => post.postID === action.payload);
+            const updatedPosts = [...state.posts];
+            updatedPosts[index].likes += 1;
+            return {
+                ...state,
+                posts: updatedPosts
             };
+        }
 
-        case INCR_SHARES:
+        case INCR_SHARES: {
+            const index = state.posts.findIndex((post) => post.postID === action.payload);
+            const updatedPosts = [...state.posts];
+            updatedPosts[index].shares += 1;
             return {
                 ...state,
-                shares: state.shares + 1
-            }
+                posts: updatedPosts
+            };
+        }
         
-        case ADD_COMMENT:
+        case ADD_COMMENT: {
+            const index = state.posts.findIndex((post) => post.postID === action.payload.postID);
+            const updatedPosts = [...state.posts];
+            updatedPosts[index].comments = action.payload.comments;
             return {
                 ...state,
-                comments: action.payload
-            }
+                posts: updatedPosts
+            };
+        }
         
         default:
             return state;

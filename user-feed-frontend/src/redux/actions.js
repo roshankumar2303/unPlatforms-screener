@@ -16,7 +16,7 @@ export const fetchStatsActionThunk = (postID) => {
         try {
             res = await axios.get("http://localhost:4444/api/getStats/" + postID);
             let [stats] = res.data;     // Since res.data is an array of single object
-            console.log("stats fetched (fetchStatsActionThunk): ", stats)
+            console.log("POST ID:", postID, " stats fetched (fetchStatsActionThunk): ", stats)
             if(stats !== undefined) {
                 // i.e., entry exists in the database...
                 dispatch(fetchStatsActionCreator(stats));
@@ -28,7 +28,7 @@ export const fetchStatsActionThunk = (postID) => {
                     { postID: postID }
                 );
                 let newStats = res.data;
-                console.log("new stats fetched (fetchStatsActionThunk): ", newStats)
+                console.log("POST ID:", postID, " new stats fetched (fetchStatsActionThunk): ", newStats)
                 dispatch(fetchStatsActionCreator(newStats));
             }
         }
@@ -38,18 +38,19 @@ export const fetchStatsActionThunk = (postID) => {
     }
 }
 
-const incrementLikesActionCreator = () => ({
-    type: INCR_LIKES 
+const incrementLikesActionCreator = (postID) => ({
+    type: INCR_LIKES,
+    payload: postID 
 })
 export const incrementLikesActionThunk = (postID) => {
     return async (dispatch, getState) => {
         try {
             let res = await axios.put(
                 "http://localhost:4444/api/updateLikes/" + postID, 
-                { likes: getState().likes + 1 }
+                { likes: getState().posts.find((post) => post.postID === postID).likes + 1 }
             );
-            dispatch(incrementLikesActionCreator());
-            console.log("(incrementLikesActionThunk): ", res.data);
+            dispatch(incrementLikesActionCreator(postID));
+            console.log("POST ID:", postID, " (incrementLikesActionThunk): ", res.data);
         }
         catch (e) {
             console.log(e);
@@ -57,18 +58,19 @@ export const incrementLikesActionThunk = (postID) => {
     }
 }
 
-const incrementSharesActionCreator = () => ({
-    type: INCR_SHARES
+const incrementSharesActionCreator = (postID) => ({
+    type: INCR_SHARES,
+    payload: postID
 })
 export const incrementSharesActionThunk = (postID) => {
     return async (dispatch, getState) => {
         try {
             let res = await axios.put(
                 "http://localhost:4444/api/updateShares/" + postID,
-                { shares: getState().shares + 1 }
+                { shares: getState().posts.find((post) => post.postID === postID).shares + 1 }
             );
-            dispatch(incrementSharesActionCreator());
-            console.log("(incrementSharesActionThunk): ", res.data);
+            dispatch(incrementSharesActionCreator(postID));
+            console.log("POST ID:", postID, " (incrementSharesActionThunk): ", res.data);
         }
         catch (e) {
             console.log(e);
@@ -76,14 +78,17 @@ export const incrementSharesActionThunk = (postID) => {
     }
 }
 
-const addCommentActionCreator = (allComments) => ({
+const addCommentActionCreator = (postID, allComments) => ({
     type: ADD_COMMENT,
-    payload: allComments
+    payload: {
+        postID: postID,
+        comments: allComments
+    }
 })
 export const addCommentActionThunk = (newComment, postID) => {
     return async (dispatch, getState) => {
         try {
-            let allComments = getState().comments;
+            let allComments = getState().posts.find((post) => post.postID === postID).comments;
             // console.log(`New comment in thunk: ${newComment}`)
             allComments.push(
                 {
@@ -95,8 +100,8 @@ export const addCommentActionThunk = (newComment, postID) => {
                 "http://localhost:4444/api/updateComments/" + postID,
                 allComments
             )
-            dispatch(addCommentActionCreator(allComments));
-            console.log("(addCommentActionThunk): ", res.data);
+            dispatch(addCommentActionCreator(postID, allComments));
+            console.log("POST ID:", postID, " (addCommentActionThunk): ", res.data);
         }
         catch (e) {
             console.log(e);

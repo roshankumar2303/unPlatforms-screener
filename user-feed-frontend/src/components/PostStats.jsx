@@ -4,11 +4,27 @@ import PostComments from "./PostComments";
 import { useSelector, useDispatch } from "react-redux"
 import { incrementLikesActionThunk ,incrementSharesActionThunk } from "../redux/actions"
 
-const PostStats = (props) => {
-    const likeCount = useSelector(state => state.likes);
-    const viewCount = useSelector(state => state.views);
-    const shareCount = useSelector(state => state.shares);
-    const commentCount = useSelector(state => state.comments.length);
+const PostStats = (props) => {    
+    const likeCount = useSelector((state) => {
+        if(state.posts.find((post) => post.postID === props.postID) !== undefined)
+            return state.posts.find((post) => post.postID === props.postID).likes;
+        return 0;
+    });
+    const viewCount = useSelector((state) => {
+        if(state.posts.find((post) => post.postID === props.postID) !== undefined)
+            return state.posts.find((post) => post.postID === props.postID).views;
+        return 0;
+    });
+    const shareCount = useSelector((state) => {
+        if(state.posts.find((post) => post.postID === props.postID) !== undefined)
+            return state.posts.find((post) => post.postID === props.postID).shares;
+        return 0;
+    });
+    const commentCount = useSelector((state) => {
+        if(state.posts.find((post) => post.postID === props.postID) !== undefined)
+            return state.posts.find((post) => post.postID === props.postID).comments.length;
+        return 0;
+    });
     
     const dispatch = useDispatch();
     const incrementLikes = () => {
