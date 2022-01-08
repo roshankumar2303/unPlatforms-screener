@@ -10,18 +10,19 @@ const fetchStatsActionCreator = (stats) => ({
 })
 export const fetchStatsActionThunk = () => {
     return async (dispatch) => {
+        let res;
         try {
-            let stats = await axios.get("http://localhost:4444/api/getStats/1");
-            let [dataFetched] = stats.data;     // Since stats.data is an array of single object
-            if(dataFetched !== undefined) {
+            res = await axios.get("http://localhost:4444/api/getStats/1");
+            let [stats] = res.data;     // Since res.data is an array of single object
+            if(stats !== undefined) {
                 // i.e., entry exists in the database...
-                dispatch(fetchStatsActionCreator(dataFetched));
+                dispatch(fetchStatsActionCreator(stats));
             }
             else {
                 // No entry exists, post to create a new entry in the database
-                let newStats = await axios.post("http://localhost:4444/api/newStats", {postID: "1"});
-                let newDataFetched = newStats.data;
-                dispatch(fetchStatsActionCreator(newDataFetched));
+                res = await axios.post("http://localhost:4444/api/newStats", {postID: "1"});
+                let newStats = res.data;
+                dispatch(fetchStatsActionCreator(newStats));
             }
         }
         catch (e) {
@@ -36,9 +37,9 @@ const incrementLikesActionCreator = () => ({
 export const incrementLikesActionThunk = () => {
     return async (dispatch, getState) => {
         try {
-            let msg = await axios.put("http://localhost:4444/api/updateLikes", {postID: 1, likes: getState().likes + 1});
+            let res = await axios.put("http://localhost:4444/api/updateLikes", {postID: 1, likes: getState().likes + 1});
             dispatch(incrementLikesActionCreator());
-            console.log(msg.data)
+            console.log(res.data)
         }
         catch (e) {
             console.log(e);

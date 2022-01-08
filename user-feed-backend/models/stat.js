@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
         shares: {
             type: DataTypes.INTEGER,
             allowNull: false
+        },
+        views: {
+            type: DataTypes.INTEGER,
+            allowNull: false
         }
     });
     return stat;
