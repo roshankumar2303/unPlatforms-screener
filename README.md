@@ -66,7 +66,8 @@ Since we would be running the server in development mode; in the `development` o
 The solution/application also features the ability to post comments, which are then stored as JSON in the entry/row of the respective post in the database.
 
 The following GIF demonstrates comments in action:
-![comments-gif](https://github.com/roshankumar2303/unPlatforms-screener/tree/master/output-images/comments.gif)
+
+![comments-gif](output-images/comments.gif)
 
 ### Multiple Posts
 For generating multiple posts, Modify `posts.json` in `user-feed-frontend/src`.
@@ -94,4 +95,5 @@ For example, Adding the following object to the array in `posts.json` would auto
 For each object in `posts.json`, a `<Post />` child component inside `<Feed />` component is generated in the React app using `map()` , and an entry/row is created in the `stats` table of the database, if it does not exists already. The entries in the table are then updated accordingly.
 
 The following GIF demonstrates multiple posts in action:
-![multiple-posts-gif](https://github.com/roshankumar2303/unPlatforms-screener/tree/master/output-images/multiple-posts.gif)
+
+![multiple-posts-gif](output-images/multiple-posts.gif)
